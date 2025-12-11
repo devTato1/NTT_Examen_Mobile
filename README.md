@@ -1,37 +1,112 @@
-# mobile-appium-starter
+--------
 
-Proyecto base **Java + Maven + Appium** (Android/iOS) con **JUnit 5** y **Page Object + Appium PageFactory**.
+# 📱 Mobile Automation Framework - Sauce Labs Demo App
 
-## Requisitos
-- Java 17+
-- Maven 3.9+
-- Appium Server en ejecución (`appium` o `appium server --address 0.0.0.0 --port 4723`)
-- Android SDK / Xcode según plataforma
+Este proyecto es un framework de automatización de pruebas móviles (Android) diseñado para validar el flujo de compra de la aplicación **"My Demo App"** de Sauce Labs.
 
-## Variables comunes (pasadas por -D)
-- `-Dplatform=android|ios`
-- `-Dapp=/ruta/a/tu.apk` (o .app/.ipa)
-- `-Dudid=...` (si usas dispositivo real)
-- `-DdeviceName=Pixel_3` (o el que corresponda)
-- `-DappiumServerUrl=http://localhost:4723`
+El proyecto utiliza **Appium** con **Cucumber (BDD)** y sigue el patrón de diseño **Page Object Model (POM)** para garantizar la mantenibilidad y escalabilidad del código.
 
-## Ejemplos
-```bash
-# Android con APK
-mvn -Dplatform=android -Dapp="/ruta/app-debug.apk" -DdeviceName="Pixel_6" test
+--------
 
-# Android con app instalada
-mvn -Dplatform=android -DappPackage="pe.com.interbank.mobilebanking"         -DappActivity="pe.com.interbank.mobilebanking.features.splash.SplashActivity" test
+## 🛠️ Tech Stack
 
-# iOS con .app en simulador
-mvn -Dplatform=ios -Dapp="/ruta/MiApp.app" -DdeviceName="iPhone 15" test
+* **Lenguaje:** Java 17
+* **Framework de Pruebas:** Cucumber 7 (Gherkin syntax)
+* **Motor de Automatización:** Appium Java Client 8.x
+* **Runner:** JUnit 4
+* **Build Tool:** Maven
+* **IDE Recomendado:** IntelliJ IDEA
+
+--------
+
+## 🚀 Características Principales
+
+1. **Page Object Model (POM):** Lógica de interacción separada de los pasos de prueba (`view` vs `step`).
+2. **Manejo Inteligente de Scroll:** Implementación de `UiScrollable` para interactuar con elementos fuera de la pantalla (ej. "Bike Light").
+3. **Estrategia "Full Reset":** Configuración robusta en `DesiredCapsFactory` que desinstala y reinstala la app entre escenarios para garantizar un estado limpio (evitando acumulación de datos en el carrito).
+4. **Captura de Evidencias:** Sistema de Hooks (`@After`) que toma una captura de pantalla (Screenshot) automáticamente cuando un escenario falla.
+5. **Validación de Bugs:** Lógica asertiva diseñada para detectar y reportar errores conocidos de la aplicación (ej. Bug de cantidad en la Camiseta).
+
+--------
+
+## 📂 Estructura del Proyecto
+
+```text
+src/test/java/com/ct/mobile
+├── config
+│   ├── MobileDriverManager.java  # Singleton para el driver
+│   └── DesiredCapsFactory.java   # Configuración de Capabilities (Android/iOS)
+├── hooks
+│   └── Hook.java                 # Setup, Teardown y Screenshots on Failure
+├── runner
+│   └── cucumberRunner.java       # Ejecutor de los tests
+├── step
+│   └── CartSteps.java            # Definición de pasos (Given, When, Then)
+└── view
+    ├── ProductListPage.java      # Lógica de la lista de productos (con Scroll)
+    ├── ProductDetailsPage.java   # Lógica de detalle y agregar al carrito
+    └── CartPage.java             # Lógica de validación dentro del carrito
 ```
 
-## Convertir en arquetipo Maven
+--------
+
+## 📋 Prerrequisitos
+
+Antes de ejecutar, asegúrate de tener instalado:
+
+1. **Java JDK 17+** y variable `JAVA_HOME` configurada.
+2. **Android Studio** y SDK Tools.
+3. **Appium Server** (corriendo en puerto `4723`).
+4. **Emulador Android** configurado (Recomendado: Pixel 4 o superior, API 30+).
+5. **APK de la App:** Ubicado en `src/test/resources/app/android/mda-2.0.2-23.apk`.
+
+--------
+
+## ⚙️ Configuración y Ejecución
+
+### 1. Iniciar Appium Server
+
+Abre una terminal o Appium Desktop y ejecuta:
+
 ```bash
-mvn clean install
-mvn archetype:create-from-project
-cd target/generated-sources/archetype
-mvn clean install
-mvn archetype:generate       -DarchetypeGroupId=com.example       -DarchetypeArtifactId=mobile-appium-starter-archetype       -DarchetypeVersion=1.0.0-SNAPSHOT       -DgroupId=com.tu.org       -DartifactId=mi-proyecto-mobile       -Dversion=1.0.0-SNAPSHOT -DinteractiveMode=false
+appium -p 4723
 ```
+
+### 2. Iniciar el Emulador
+
+Abre tu dispositivo virtual desde Android Studio (AVD Manager). Asegúrate de que esté desbloqueado.
+
+### 3. Ejecutar los Tests
+
+Puedes ejecutar los tests directamente desde IntelliJ haciendo clic derecho en `cucumberRunner.java` -> **Run**, o mediante línea de comandos con Maven:
+
+```bash
+mvn clean test
+```
+
+--------
+
+## 🐛 Reporte de Bugs Detectados
+
+Durante la ejecución de la suite `@Regresion`, se valida el comportamiento de la aplicación. Actualmente, el framework detecta el siguiente comportamiento anómalo:
+
+| Producto | Comportamiento Esperado | Comportamiento Actual | Resultado del Test |
+|:---------|:------------------------|:----------------------|:-------------------|
+| **Sauce Labs Backpack** | Agregar 1 unidad. | Agrega 1 unidad. | ✅ **PASSED** |
+| **Sauce Labs Bolt T-Shirt** | Agregar 1 unidad. | **Agrega 10 unidades** (Bug de la App). | ❌ **FAILED** (Correcto) |
+| **Sauce Labs Bike Light** | Agregar 2 unidades. | Agrega 2 unidades (Requiere Scroll). | ✅ **PASSED** |
+
+> **Nota:** El fallo en el escenario de la "Bolt T-Shirt" es intencional y confirma que la automatización está detectando correctamente el defecto de software.
+
+--------
+
+## 📸 Evidencias
+
+Las capturas de pantalla de los errores se adjuntan automáticamente al reporte de Cucumber al finalizar la ejecución.
+
+--------
+
+**Autor:** [Tu Nombre]  
+**Fecha:** Diciembre 2025
+
+--------
