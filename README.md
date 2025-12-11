@@ -114,9 +114,9 @@ Durante la ejecución de la suite `@Regresion`, se valida el comportamiento de l
 
 | Producto | Comportamiento Esperado | Comportamiento Actual | Resultado del Test |
 |:---------|:------------------------|:----------------------|:-------------------|
-| **Sauce Labs Backpack** | Agregar 1 unidad. | Agrega 1 unidad. | ✅ **PASSED** |
-| **Sauce Labs Bolt T-Shirt** | Agregar 1 unidad. | **Agrega 10 unidades** (Bug de la App). | ❌ **FAILED** (Correcto) |
-| **Sauce Labs Bike Light** | Agregar 2 unidades. | Agrega 2 unidades (Requiere Scroll). | ✅ **PASSED** |
+| **Sauce Labs Backpack** | Agregar 1 unidad. | Agrega 1 unidad. | ✅ **PASSED**       |
+| **Sauce Labs Bolt T-Shirt** | Agregar 1 unidad. | **Agrega 10 unidades** (Bug de la App). | ❌ **FAILED**       |
+| **Sauce Labs Bike Light** | Agregar 2 unidades. | Agrega 2 unidades (Requiere Scroll). | ❌ **FAILED**       |
 
 > **Nota:** El fallo en el escenario de la "Bolt T-Shirt" es intencional y confirma que la automatización está detectando correctamente el defecto de software.
 
