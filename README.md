@@ -32,10 +32,8 @@ El proyecto utiliza **Appium** con **Cucumber (BDD)** y sigue el patrón de dise
 ## 📂 Estructura del Proyecto
 
 ```text
-src/test/java/com/ct/mobile
-├── config
-│   ├── MobileDriverManager.java  # Singleton para el driver
-│   └── DesiredCapsFactory.java   # Configuración de Capabilities (Android/iOS)
+src/test/java/com/test/mobile
+
 ├── hooks
 │   └── Hook.java                 # Setup, Teardown y Screenshots on Failure
 ├── runner
@@ -46,6 +44,14 @@ src/test/java/com/ct/mobile
     ├── ProductListPage.java      # Lógica de la lista de productos (con Scroll)
     ├── ProductDetailsPage.java   # Lógica de detalle y agregar al carrito
     └── CartPage.java             # Lógica de validación dentro del carrito
+```
+
+```text
+src/main/java/com/test/mobile/
+├── config
+│   ├── MobileDriverManager.java  # Singleton para el driver
+│   └── DesiredCapsFactory.java   # Configuración de Capabilities (Android/iOS)
+
 ```
 
 --------
@@ -106,7 +112,7 @@ Las capturas de pantalla de los errores se adjuntan automáticamente al reporte 
 
 --------
 
-**Autor:** [Tu Nombre]  
+**Autor:** Leonardo Reascos
 **Fecha:** Diciembre 2025
 
 --------
