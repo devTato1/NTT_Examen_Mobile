@@ -38,7 +38,8 @@ public class CartPage {
         }
 
         // LEER LA CANTIDAD
-        String xpathCantidad = "//android.widget.TextView[contains(@text, '" + productName + "')]/../..//android.widget.TextView[@resource-id='com.saucelabs.mydemoapp.android:id/noTV']";
+        String xpathCantidad = "//android.widget.TextView[contains(@text, '" + productName +
+                "')]/../..//android.widget.TextView[@resource-id='com.saucelabs.mydemoapp.android:id/noTV']";
 
         try {
             WebElement quantityElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -49,7 +50,8 @@ public class CartPage {
             return Integer.parseInt(texto);
 
         } catch (Exception e) {
-            System.out.println("ERROR CRÍTICO: Producto '" + productName + "' no encontrado visualmente tras el scroll.");
+            System.out.println("ERROR CRÍTICO: Producto '"
+                    + productName + "' no encontrado visualmente tras el scroll.");
             return 0;
         }
     }

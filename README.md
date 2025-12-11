@@ -1,6 +1,6 @@
 --------
 
-# 📱 Mobile Automation Framework - Sauce Labs Demo App
+# Examen de Automatizacion
 
 Este proyecto es un framework de automatización de pruebas móviles (Android) diseñado para validar el flujo de compra de la aplicación **"My Demo App"** de Sauce Labs.
 
@@ -8,7 +8,7 @@ El proyecto utiliza **Appium** con **Cucumber (BDD)** y sigue el patrón de dise
 
 --------
 
-## 🛠️ Tech Stack
+##  Stack
 
 * **Lenguaje:** Java 17
 * **Framework de Pruebas:** Cucumber 7 (Gherkin syntax)
@@ -19,7 +19,7 @@ El proyecto utiliza **Appium** con **Cucumber (BDD)** y sigue el patrón de dise
 
 --------
 
-## 🚀 Características Principales
+## Características Principales
 
 1. **Page Object Model (POM):** Lógica de interacción separada de los pasos de prueba (`view` vs `step`).
 2. **Manejo Inteligente de Scroll:** Implementación de `UiScrollable` para interactuar con elementos fuera de la pantalla (ej. "Bike Light").
@@ -56,7 +56,7 @@ src/main/java/com/test/mobile/
 
 --------
 
-## 📋 Prerrequisitos
+## Prerrequisitos
 
 Antes de ejecutar, asegúrate de tener instalado:
 
@@ -68,7 +68,23 @@ Antes de ejecutar, asegúrate de tener instalado:
 
 --------
 
-## ⚙️ Configuración y Ejecución
+## Configuración y Ejecución
+
+### 0. Configurar ruta del APK (Importante)
+
+Para que Appium encuentre la aplicación en tu entorno local, debes actualizar el archivo de propiedades:
+
+1.  Ve al archivo: `src/test/resources/config/android.properties`
+2.  Edita la **línea 3** (`app=`) y coloca la ruta absoluta o relativa donde se encuentra el APK en tu PC.
+
+<!-- end list -->
+
+```properties
+# Ejemplo en android.properties
+app=C:/Usuarios/TuUsuario/Descargas/mda-2.0.2-23.apk
+# O si está dentro del proyecto:
+app=src/test/resources/app/android/mda-2.0.2-23.apk
+```
 
 ### 1. Iniciar Appium Server
 
@@ -92,7 +108,7 @@ mvn clean test
 
 --------
 
-## 🐛 Reporte de Bugs Detectados
+## Reporte de Bugs Detectados
 
 Durante la ejecución de la suite `@Regresion`, se valida el comportamiento de la aplicación. Actualmente, el framework detecta el siguiente comportamiento anómalo:
 
@@ -106,7 +122,7 @@ Durante la ejecución de la suite `@Regresion`, se valida el comportamiento de l
 
 --------
 
-## 📸 Evidencias
+## Evidencias
 
 Las capturas de pantalla de los errores se adjuntan automáticamente al reporte de Cucumber al finalizar la ejecución.
 

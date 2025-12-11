@@ -1,6 +1,6 @@
-package com.test.mobile.glue; // <--- Paquete corregido a 'test'
+package com.test.mobile.glue;
 
-import com.test.mobile.step.CartSteps; // Importamos la lógica
+import com.test.mobile.step.CartSteps;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

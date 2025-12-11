@@ -33,7 +33,7 @@ public class Hook {
         AndroidDriver driver = (AndroidDriver) MobileDriverManager.getDriver();
 
         if (driver != null) {
-            // 1. CAPTURA DE PANTALLA EN CASO DE ERROR
+            // CAPTURA DE PANTALLA EN CASO DE ERROR
             if (scenario.isFailed()) {
                 try {
                     byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
@@ -44,7 +44,7 @@ public class Hook {
                 }
             }
 
-            // 2. REINICIAR LA APP
+            // REINICIAR LA APP
             try {
                 driver.terminateApp(APP_PACKAGE);
                 driver.activateApp(APP_PACKAGE);
