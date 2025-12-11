@@ -19,9 +19,6 @@ public class ProductDetailsPage {
 
     public void addQuantity(int quantity) {
         if (quantity <= 1) return;
-
-        // ESTRATEGIA NUEVA: Scroll hasta el botón "Add to cart" (que siempre está al final)
-        // Al bajar hasta el fondo, el botón "+" quedará visible obligatoriamente.
         try {
             driver.findElement(AppiumBy.androidUIAutomator(
                     "new UiScrollable(new UiSelector().scrollable(true))" +
@@ -30,7 +27,6 @@ public class ProductDetailsPage {
             System.out.println("No fue necesario hacer scroll o falló.");
         }
 
-        // Ahora sí, buscamos el "+"
         WebElement plusButton = wait.until(ExpectedConditions.elementToBeClickable(
                 AppiumBy.accessibilityId("Increase item quantity")
         ));
@@ -41,7 +37,6 @@ public class ProductDetailsPage {
     }
 
     public void addToCart() {
-        // Scroll preventivo también para el botón de "Add to Cart"
         try {
             driver.findElement(AppiumBy.androidUIAutomator(
                     "new UiScrollable(new UiSelector().scrollable(true))" +
@@ -56,7 +51,6 @@ public class ProductDetailsPage {
     }
 
     public void goBackToCatalog() {
-        // Pausa breve para estabilidad antes de volver
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {

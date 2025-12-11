@@ -17,7 +17,6 @@ public class ProductListPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // SCROLL ACTIVADO: Esto es vital para encontrar la "Bike Light" que está abajo
     public void selectProduct(String productName) {
         System.out.println(">>> Buscando producto: " + productName);
         try {
@@ -26,7 +25,6 @@ public class ProductListPage {
                             ".scrollIntoView(new UiSelector().description(\"" + productName + "\"));"));
             product.click();
         } catch (Exception e) {
-            // Plan B: Si ya se ve, clic directo
             driver.findElement(AppiumBy.accessibilityId(productName)).click();
         }
     }
@@ -40,13 +38,12 @@ public class ProductListPage {
 
     public boolean isPageLoaded() {
         try {
-            // Buscamos el título principal que dice "Products"
             wait.until(ExpectedConditions.visibilityOfElementLocated(
                     AppiumBy.xpath("//android.widget.TextView[@text='Products']")
             ));
-            return true; // Si lo encuentra, devuelve Verdadero
+            return true;
         } catch (Exception e) {
-            return false; // Si no lo encuentra tras 10 seg, devuelve Falso
+            return false;
         }
     }
 }

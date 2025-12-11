@@ -19,15 +19,11 @@ public class DesiredCapsFactory {
         if (cfg.get("autoGrantPermissions") != null)
             options.setCapability("autoGrantPermissions", Boolean.parseBoolean(cfg.get("autoGrantPermissions")));
 
-        // --- CORRECCIÓN CRÍTICA: LIMPIEZA ---
-        // Esto asegura que cada test empiece con el carrito en 0
-        options.setCapability("appium:fullReset", false);  // <--- TIENE QUE SER TRUE
-        options.setCapability("appium:noReset", false);   // <--- TIENE QUE SER FALSE
-
-        // --- ESTABILIDAD ---
+        options.setCapability("appium:fullReset", false);
+        options.setCapability("appium:noReset", false);
         options.setCapability("appium:appWaitActivity", "*");
-        options.setCapability("appium:appWaitDuration", 60000);
-        options.setCapability("appium:androidInstallTimeout", 120000);
+        options.setCapability("appium:appWaitDuration", 15000);
+        options.setCapability("appium:androidInstallTimeout", 12000);
         options.setCapability("appium:forceAppLaunch", true);
 
         return options;

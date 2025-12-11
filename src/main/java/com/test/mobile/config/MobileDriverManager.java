@@ -16,6 +16,7 @@ public class MobileDriverManager {
     private static Scenario scenario;
 
     public static AppiumDriver getDriver() {
+
         return driver;
     }
 
@@ -26,7 +27,9 @@ public class MobileDriverManager {
                 ? DesiredCapsFactory.forIOS(cfg)
                 : DesiredCapsFactory.forAndroid(cfg);
         try {
-            URL url = new URL(serverUrl != null ? serverUrl : System.getProperty("appiumServerUrl", "http://127.0.0.1:4723/"));
+            URL url = new URL(serverUrl != null ? serverUrl : System.getProperty(
+                    "appiumServerUrl", "http://127.0.0.1:4723/")
+            );
             driver = "ios".equalsIgnoreCase(plaform)
                     ? new IOSDriver(url, caps)
                     : new AndroidDriver(url, caps);
@@ -34,6 +37,7 @@ public class MobileDriverManager {
             throw new RuntimeException(e);
         }
     }
+
 
     public static void stopDriver() {
         if (driver != null) {
@@ -45,11 +49,18 @@ public class MobileDriverManager {
         }
     }
 
-    public static void screenShot(){
+    public static void setScenario(Scenario s) {
+        scenario = s;
+    }
 
-        byte[] evidencia = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-
-        scenario.attach(evidencia, "image/png", "evidencias");
-
+    public static void screenShot(String nombreEvidencia){
+        if (driver != null && scenario != null) {
+            try {
+                byte[] evidencia = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+                scenario.attach(evidencia, "image/png", nombreEvidencia);
+            } catch (Exception e) {
+                System.out.println("Error tomando foto: " + e.getMessage());
+            }
+        }
     }
 }

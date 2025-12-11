@@ -2,21 +2,18 @@ package com.test.mobile.hooks;
 
 import com.test.mobile.config.MobileDriverManager;
 import io.appium.java_client.android.AndroidDriver;
-import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.BeforeAll;
-import io.cucumber.java.Scenario;
+import io.cucumber.java.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 public class Hook {
 
-    // ID de la app para poder reiniciarla (lo saqué de tu XML anterior)
+    // ID de la app para poder reiniciarla
     private static final String APP_PACKAGE = "com.saucelabs.mydemoapp.android";
 
     @BeforeAll()
     public static void beforeAll() {
-        // Código para inicializar o AppiumDriver antes de TODOS los tests
+        // Código para inicializar
         String platform = System.getProperty("platform", "android");
         String serverUrl = System.getProperty("appiumServerUrl", "http://127.0.0.1:4723/");
         if (MobileDriverManager.getDriver() == null) {
@@ -24,7 +21,12 @@ public class Hook {
         }
     }
 
-    // --- ESTA ES LA PARTE NUEVA QUE NECESITAS ---
+    @Before
+    public void setUp(Scenario scenario) {
+        // Pasamos el escenario al Manager para que pueda adjuntar fotos durante el test
+        MobileDriverManager.setScenario(scenario);
+    }
+
     @After
     public void tearDown(Scenario scenario) {
         // Obtenemos el driver actual
@@ -42,9 +44,7 @@ public class Hook {
                 }
             }
 
-            // 2. REINICIAR LA APP (SOFT RESET)
-            // Como usas @BeforeAll, el driver no se cierra.
-            // Obligamos a la app a cerrarse y abrirse para limpiar el carrito.
+            // 2. REINICIAR LA APP
             try {
                 driver.terminateApp(APP_PACKAGE);
                 driver.activateApp(APP_PACKAGE);
@@ -57,7 +57,6 @@ public class Hook {
 
     @AfterAll()
     public static void afterAll() {
-        // Código para finalizar o AppiumDriver al terminar TODO
         MobileDriverManager.stopDriver();
     }
 }

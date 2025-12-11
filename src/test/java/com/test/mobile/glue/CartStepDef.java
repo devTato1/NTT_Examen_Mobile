@@ -8,7 +8,6 @@ import io.cucumber.java.en.When;
 
 public class CartStepDef {
 
-    // Instanciamos la clase de lógica (Steps)
     private CartSteps cartSteps = new CartSteps();
 
     @Given("estoy en la aplicación de SauceLabs")

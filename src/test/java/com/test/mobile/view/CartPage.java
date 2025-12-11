@@ -18,18 +18,14 @@ public class CartPage {
     }
 
     public int getProductQuantity(String productName) {
-        // 1. Espera de seguridad
+        // Espera de seguridad
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 AppiumBy.xpath("//android.widget.TextView[@text='My Cart']")
         ));
 
-        // 2. SCROLL ESPECÍFICO (SOLUCIÓN AL NO-SCROLL)
+        // SCROLL ESPECÍFICO
         try {
-            // AQUI ESTA EL CAMBIO CLAVE:
-            // Usamos .resourceId("...productRV") para obligar a que scrollee LA LISTA DE PRODUCTOS
-            // y no toda la pantalla o el contenedor equivocado.
             String listID = "com.saucelabs.mydemoapp.android:id/productRV";
-
             String scrollCommand = "new UiScrollable(new UiSelector().resourceId(\"" + listID + "\"))" +
                     ".scrollIntoView(new UiSelector().textContains(\"" + productName + "\"));";
 
@@ -37,12 +33,11 @@ public class CartPage {
             System.out.println(">>> Scroll realizado buscando en la lista RV: " + productName);
 
         } catch (Exception e) {
-            // Si falla el scroll por ID, intentamos un pequeño swipe manual o asumimos que ya se ve
+            // Si falla el scroll por ID
             System.out.println(">>> Aviso: El scroll automático reportó una excepción o el elemento ya estaba ahí.");
         }
 
-        // 3. LEER LA CANTIDAD
-        // Buscamos el texto que acabamos de traer a la vista
+        // LEER LA CANTIDAD
         String xpathCantidad = "//android.widget.TextView[contains(@text, '" + productName + "')]/../..//android.widget.TextView[@resource-id='com.saucelabs.mydemoapp.android:id/noTV']";
 
         try {
